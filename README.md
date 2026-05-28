@@ -1,8 +1,4 @@
 # MLOps Group Assignment: Task Distribution Plan
-**Course:** PGD AI Program, IIT Jodhpur  
-**Project:** End-to-End MLOps Pipeline (Docker · GitHub Actions · Kaggle · W&B)  
-**Total Value:** 100 Marks  
-
 ---
 
 ## Team Roles Overview
