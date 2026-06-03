@@ -33,7 +33,5 @@ jobs:
           fi
 
       - name: Run flake8
-        run: |
-          flake8 
-          .
+        run: flake8 .
           
