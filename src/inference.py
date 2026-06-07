@@ -35,6 +35,16 @@ def main():
     print(f"Predicted Label: {label_name}")
     print(f"Confidence: {confidence:.4f}")
 
+    # Write to GitHub Actions Job Summary
+    summary_file = os.environ.get("GITHUB_STEP_SUMMARY")
+    if summary_file:
+        with open(summary_file, "a") as f:
+            f.write("## Inference Result\n\n")
+            f.write(f"**Input:** {input_text}\n\n")
+            f.write(f"| Predicted Label | Confidence |\n")
+            f.write(f"|---|---|\n")
+            f.write(f"| **{label_name}** | `{confidence:.4f}` |\n")
+
     wandb.log(
         {
             "input_text": input_text,
