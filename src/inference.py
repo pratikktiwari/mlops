@@ -3,8 +3,6 @@ import wandb
 from transformers import pipeline
 
 MODEL_ID = "mehtayash12345678/mlops-ag_news_classification-distilbert"
-# TODO: Replace with id2label.json when merged into develop
-LABELS = ["World", "Sports", "Business", "Sci/Tech"]
 
 WANDB_PROJECT = "mlops-ag_news_classification-distilbert"
 WANDB_ENTITY = "g25ait2133-indian-institute-technology-jodhpur"
@@ -30,8 +28,7 @@ def main():
     )
 
     result = classifier(input_text)[0]
-    label_index = int(result["label"].replace("LABEL_", ""))
-    label_name = LABELS[label_index]
+    label_name = result["label"]
     confidence = result["score"]
 
     print(f"Input: {input_text}")
