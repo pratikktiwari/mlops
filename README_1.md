@@ -8,7 +8,7 @@ The full 120k dataset would eat up too much of Kaggle's free GPU time during fin
 
 ## CSV files
 We are going with csv instead of pkl because of:-
-    - it is easy to load and inspect withoout code and safe.
+    - it is easy to load and inspect without code and safe.
     - text +label just 2 columns with 50k rows
     - not million rows or complex object and data types.
     - it is portable and see diff in PRs.
@@ -43,13 +43,34 @@ We are going with csv instead of pkl because of:-
 | 2 | Business | 12,500 | 1,900 |
 | 3 | Sci/Tech | 12,500 | 1,900 |
 
-# Clone the repo into the Kaggle environment
-!git clone https://github.com/pratikktiwari/mlops.git
+### Using the Data Prep Script in Kaggle
 
-# Import Member B's script
+To use the custom data processing script in a Kaggle notebook, you need to pull the repository into the Kaggle environment. 
+
+The following code block will clone the repo if it's your first time running the cell, or refresh it with the latest changes if it has already been cloned:
+
+```python
+import os
 import sys
-sys.path.append('/kaggle/working/<your-repo-name>/src')
-from data_prep import process_split 
 
-# Load raw data from Kaggle and clean it using Member B's function
+repo_path = '/kaggle/working/mlops'
+
+# 1. Clone the repo if it doesn't exist, otherwise pull the latest changes
+if not os.path.exists(repo_path):
+    !git clone [https://github.com/pratikktiwari/mlops.git](https://github.com/pratikktiwari/mlops.git)
+else:
+    print("Repository already exists. Pulling latest changes...")
+    !cd {repo_path} && git pull
+
+# 2. Add the repo root to sys.path so Python can find the script
+if repo_path not in sys.path:
+    sys.path.append(repo_path)
+
+# 3. Import the cleaning function
+from data_prep import process_split
+
+# Load raw data from Kaggle and clean it using src/data_prep.py function
 # ...
+```
+### Import the HF and WANDB keys ans check the evaluations.
+

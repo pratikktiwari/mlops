@@ -2,22 +2,39 @@ import os
 import re
 import json
 import pandas as pd
-import kagglehub
+try:
+    import kagglehub
+except ImportError as e:
+    raise ImportError(
+        "The 'kagglehub' module was not found. "
+        "If you are running this script outside of Kaggle, please install it by running: pip install kagglehub"
+    ) from e
 
 SAMPLES_PER_CLASS_TRAIN = 12500
 SAMPLES_PER_CLASS_TEST = 1900
 RANDOM_SEED = 42
 
 
+import html
+
 def clean_text(text):
     if not isinstance(text, str):
         return ""
+    
     text = text.strip()
-    text = re.sub(r"#39;", "'", text)
-    text = re.sub(r"&amp;", "&", text)
-    text = re.sub(r'quot;', '"', text)
+    
+    # 1. Safely and completely unescape ALL HTML entities
+    # text = re.sub(r"#39;", "'", text)
+    # text = re.sub(r"&amp;", "&", text)
+    # text = re.sub(r'quot;', '"', text)
+    text = html.unescape(text)
+    
+    # 2. Remove URLs
     text = re.sub(r"http\S+|www\S+", "", text)
+    
+    # 3. Normalize whitespace
     text = re.sub(r"\s+", " ", text)
+    
     return text.strip()
 
 
