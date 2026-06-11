@@ -7,9 +7,6 @@ ENV PYTHONUNBUFFERED=1
 # Set working directory inside container
 WORKDIR /app
 
-# HF_MODEL_NAME build arg is currently unused by src/inference.py (MODEL_ID is hard-coded).
-# If you want the model to be configurable, update src/inference.py to read it from env and reintroduce this ARG/ENV.
-
 # Copy dependency file
 COPY requirements.txt .
 
@@ -20,7 +17,10 @@ RUN pip install --no-cache-dir --upgrade pip && \
 # Copy source code
 COPY src/ ./src
 
-# id2label.json is currently unused by src/inference.py; omit it from the image to reduce clutter.
+# Create and switch to a non-root user
+RUN useradd --create-home --uid 10001 mlopsuser && chown -R mlopsuser:mlopsuser /app
 
+USER mlopsuser
+ 
 # Default command to run inference
 CMD ["python", "src/inference.py"]
