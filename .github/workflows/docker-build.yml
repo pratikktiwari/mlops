@@ -28,7 +28,7 @@ jobs:
       
         - name: Build image
           run: |
-            docker build -t ${{ secrets.DOCKER_USERNAME }}/mlops-group-project.
+            docker build -t ${{ secrets.DOCKER_USERNAME }}/mlops-group-project .
     
         - name: Push image
           run: |
