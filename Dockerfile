@@ -7,11 +7,8 @@ ENV PYTHONUNBUFFERED=1
 # Set working directory inside container
 WORKDIR /app
 
-# Hugging Face model argument
-ARG HF_MODEL_NAME=mlops-ag_news_classification-distilbert
-
-# Make model accessible inside container
-ENV HF_MODEL_NAME=${HF_MODEL_NAME}
+# HF_MODEL_NAME build arg is currently unused by src/inference.py (MODEL_ID is hard-coded).
+# If you want the model to be configurable, update src/inference.py to read it from env and reintroduce this ARG/ENV.
 
 # Copy dependency file
 COPY requirements.txt .
