@@ -23,8 +23,7 @@ RUN pip install --no-cache-dir --upgrade pip && \
 # Copy source code
 COPY src/ ./src
 
-# Copy label mapping
-COPY id2label.json .
+# id2label.json is currently unused by src/inference.py; omit it from the image to reduce clutter.
 
 # Default command to run inference
 CMD ["python", "src/inference.py"]
